@@ -293,7 +293,7 @@ class Pry
     end
 
     if complete_expr
-      Pry.history << @eval_string.chomp unless options[:generated]
+      push_to_history(@eval_string) unless options[:generated]
 
       if @eval_string =~ /;\Z/ || @eval_string.empty? || @eval_string =~ /\A *#.*\n\z/
         @suppress_output = true
@@ -663,5 +663,11 @@ class Pry
   # @return [Boolean]
   def quiet?
     config.quiet
+  end
+
+  def push_to_history(eval_str)
+    lines = eval_str.each_line.to_a
+    str = lines.size > 1 ? lines.map(&:strip).join('; ') : lines.join
+    Pry.history << str
   end
 end
