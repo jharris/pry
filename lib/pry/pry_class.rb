@@ -94,8 +94,19 @@ class Pry
 
   # Trap interrupts on jruby, and make them behave like MRI so we can
   # catch them.
+  at_exit do
+    exit!(0)
+  end
   def self.load_traps
-    trap('INT'){ raise Interrupt }
+      # puts "loading traps..."
+    trap('INT') do
+      begin
+        Pry.run_command "continue", :show_output => true, :target=> Pry.current
+      rescue
+        puts "to the rescue"
+        exit
+      end
+    end
   end
 
   def self.load_win32console

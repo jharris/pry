@@ -56,9 +56,10 @@ class Pry::Config::Default
     should_load_local_rc: proc {
       true
     },
-    should_trap_interrupts: proc {
-      Pry::Helpers::BaseHelpers.jruby?
-    }, # TODO: Pry::Platform.jruby?
+    # should_trap_interrupts: proc {
+    #   Pry::Helpers::BaseHelpers.jruby?
+    # }, # TODO: Pry::Platform.jruby?
+    should_trap_interrupts: proc {true},
     disable_auto_reload: proc {
       false
     },
